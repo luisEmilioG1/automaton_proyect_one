@@ -40,14 +40,32 @@ class Automaton:
         new_node = State(name)
         self._state_list.append(new_node)
 
+    def _event_exists(self, event: Event):
+        for self_event in self._event_list:
+            self_init_state_name = self_event.get_init_state().get_name()
+            self_final_state_name = self_event.get_final_state().get_name()
+
+            init_state_name = event.get_init_state().get_name()
+            final_state_name = event.get_final_state().get_name()
+
+            if (self_init_state_name == init_state_name and
+                    self_final_state_name == final_state_name):
+                return True
+
+        return False
+
     def add_event(self, init_node_name: str, final_node_name: str, names: list):
         init_node = self._get_one_state(init_node_name)
         final_node = self._get_one_state(final_node_name)
 
         if not (init_node) or not (final_node):
-            raise Exception('alguno de los nodos no existe.')
+            raise Exception('alguno de los estados no existe.')
 
         new_event = Event(init_node, final_node, names)
+
+        if (self._event_exists(new_event)):
+            raise Exception('el evento ya existe.')
+
         self._event_list.append(new_event)
 
     def print_event(self):

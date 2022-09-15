@@ -18,6 +18,7 @@ automaton1.add_state('E2')
 automaton1.add_event('E1', 'E1', ['1'])
 automaton1.add_event('E1', 'E2', ['0'])
 automaton1.add_event('E2', 'E1', ['0', '1'])
+# automaton1.add_event('E2', 'E1', ['0', '1'])
 
 automaton1.set_initial_state('E1')
 automaton1.add_final_state('E2')
