@@ -74,5 +74,5 @@ class Automaton:
             final_node = event.get_final_state()
             names = event.get_names()
 
-            print(init_node.get_name() + ' <-- ' +
+            print(init_node.get_name() + ' -- ' +
                   str(names)+' --> '+final_node.get_name())

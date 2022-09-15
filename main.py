@@ -1,26 +1,28 @@
-from model.State import State
 from model.Automaton import Automaton
-from model.Event import Event
 
 from init_data.data import automaton_uno
 
-e1 = State('E1')
-e2 = State('E2')
+alphabet = automaton_uno['E']
+states = automaton_uno['X']
+initial_state = automaton_uno['X0']
+final_states = automaton_uno['Xm']
+functions_transition = automaton_uno['fun_transition']
 
-t1 = Event(e1, e1, ['1'])
-t2 = Event(e1, e2, ['0'])
-t3 = Event(e2, e1, ['0', '1'])
+automaton1 = Automaton(alphabet)
 
-automaton1 = Automaton(['0', '1'])
-automaton1.add_state('E1')
-automaton1.add_state('E2')
+for state_name in states:
+    automaton1.add_state(state_name)
 
-automaton1.add_event('E1', 'E1', ['1'])
-automaton1.add_event('E1', 'E2', ['0'])
-automaton1.add_event('E2', 'E1', ['0', '1'])
-# automaton1.add_event('E2', 'E1', ['0', '1'])
+for transition in functions_transition:
+    initial_state = transition['initial_state']
+    destination_state = transition['destination_state']
+    names = transition['names']
 
-automaton1.set_initial_state('E1')
-automaton1.add_final_state('E2')
+    automaton1.add_event(initial_state, destination_state, names)
+
+for state_name in final_states:
+    automaton1.add_final_state(state_name)
+
+automaton1.set_initial_state(initial_state)
 
 automaton1.print_event()
