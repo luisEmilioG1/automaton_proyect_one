@@ -14,7 +14,7 @@ class Automaton:
 
     def load_automaton(self, url: str):
 
-        automaton = ''
+        automaton = {}
         with open(url) as content:
             automaton = json.load(content)
 
@@ -40,6 +40,17 @@ class Automaton:
         self.set_initial_state(initial_state)
 
         self.set_alphabet(alphabet)
+
+        is_incomplete = self.is_incomplete()
+
+        if not (is_incomplete):
+            return
+
+        print('incomplete ...\n')
+        self.print_event()
+        self.conplete_automaton_sump(is_incomplete)
+        print('\ncomplete ...\n')
+        self.print_event()
 
     def _get_one_state(self, state_name):
         for node in self._state_list:
@@ -102,7 +113,13 @@ class Automaton:
 
         self._event_list.append(new_event)
 
-    def is_complete(self):
+    def is_incomplete(self):
+        """ if is incomplete return 
+        {
+            "state_name" : [missing_transitions...]
+            ...
+        }
+        """
         transitions_of_initial_states = {}
 
         for event in self._event_list:
@@ -120,11 +137,26 @@ class Automaton:
 
                 transitions_of_initial_states[init_node_name].append(name)
 
-        for initial_state in transitions_of_initial_states:
-            if not (transitions_of_initial_states[initial_state] == self._alphabet):
-                return False
+        missing_transitions = {}
 
-        return True
+        for initial_state in transitions_of_initial_states:
+            missing_transition = list(
+                set(self._alphabet) - set(transitions_of_initial_states[initial_state]))
+
+            if (bool(missing_transition)):
+                missing_transitions[initial_state] = missing_transition
+
+        if (bool(missing_transitions)):
+            return missing_transitions
+
+        return False
+
+    def conplete_automaton_sump(self, missing_transitions: dict):
+        self.add_state('sum')
+        for init_state_name in missing_transitions:
+            self.add_event(init_state_name, 'sum',
+                           missing_transitions[init_state_name])
+        self.add_event('sum', 'sum', self._alphabet)
 
     def print_event(self):
         for event in self._event_list:
