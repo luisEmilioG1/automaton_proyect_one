@@ -88,25 +88,49 @@ class Automaton:
 
         return False
 
-    def add_event(self, init_node_name: str, final_node_name: str, event: list):
-        init_node = self._get_one_state(init_node_name)
+    def add_event(self, init_node_name_name: str, final_node_name: str, event: list):
+        init_node_name = self._get_one_state(init_node_name_name)
         final_node = self._get_one_state(final_node_name)
 
-        if not (init_node) or not (final_node):
+        if not (init_node_name) or not (final_node):
             raise Exception('alguno de los estados no existe.')
 
-        new_event = Event(init_node, final_node, event)
+        new_event = Event(init_node_name, final_node, event)
 
         if (self._event_exists(new_event)):
             raise Exception('el evento ya existe.')
 
         self._event_list.append(new_event)
 
+    def is_complete(self):
+        transitions_of_initial_states = {}
+
+        for event in self._event_list:
+            init_node_name = event.get_init_state().get_name()
+            event_names = event.get_names()
+
+            for name in event_names:
+                exist_initial_state = transitions_of_initial_states.get(
+                    init_node_name, False)
+
+                if not (exist_initial_state):
+                    transitions_of_initial_states[init_node_name] = []
+                    transitions_of_initial_states[init_node_name].append(name)
+                    continue
+
+                transitions_of_initial_states[init_node_name].append(name)
+
+        for initial_state in transitions_of_initial_states:
+            if not (transitions_of_initial_states[initial_state] == self._alphabet):
+                return False
+
+        return True
+
     def print_event(self):
         for event in self._event_list:
-            init_node = event.get_init_state()
+            init_node_name = event.get_init_state()
             final_node = event.get_final_state()
-            event = event.get_names()
+            event_names = event.get_names()
 
-            print(init_node.get_name() + ' -- ' +
-                  str(event)+' --> '+final_node.get_name())
+            print(init_node_name.get_name() + ' -- ' +
+                  str(event_names)+' --> '+final_node.get_name())
