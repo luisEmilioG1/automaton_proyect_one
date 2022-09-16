@@ -48,7 +48,7 @@ class Automaton:
 
         print('incomplete ...\n')
         self.print_event()
-        self.conplete_automaton_sump(is_incomplete)
+        self.complete_automaton_sump(is_incomplete)
         print('\ncomplete ...\n')
         self.print_event()
 
@@ -151,7 +151,7 @@ class Automaton:
 
         return False
 
-    def conplete_automaton_sump(self, missing_transitions: dict):
+    def complete_automaton_sump(self, missing_transitions: dict):
         self.add_state('sum')
         for init_state_name in missing_transitions:
             self.add_event(init_state_name, 'sum',
