@@ -1,3 +1,5 @@
+from ast import Return
+from pickle import FALSE
 from .State import State
 from .Event import Event
 
@@ -46,10 +48,10 @@ class Automaton:
         if not (is_incomplete):
             return
 
-        print('incomplete ...\n')
+        print('incompleto era...\n')
         self.print_event()
         self.complete_automaton_sump(is_incomplete)
-        print('\ncomplete ...\n')
+        print('\nahora, completo es...\n')
         self.print_event()
 
     def _get_one_state(self, state_name):
@@ -58,6 +60,29 @@ class Automaton:
                 return node
         return None
 
+    def _event_exists(self, event: Event):
+        for self_event in self._event_list:
+            self_init_state_name = self_event.get_init_state().get_name()
+            self_final_state_name = self_event.get_final_state().get_name()
+            self_names_event = self_event.get_names()
+
+            init_state_name = event.get_init_state().get_name()
+            final_state_name = event.get_final_state().get_name()
+            names_event = event.get_names()
+
+            if not (self_init_state_name == init_state_name and
+                    self_final_state_name == final_state_name):
+                return False
+
+            for name in names_event:
+                if (name in self_names_event):
+                    return True
+
+        return False
+
+    def set_alphabet(self, alphabet):
+        self._alphabet = alphabet
+
     def set_initial_state(self, state_name: str):
         new_initial_state = self._get_one_state(state_name)
         if not (new_initial_state):
@@ -65,9 +90,6 @@ class Automaton:
 
         new_initial_state.set_is_initial(True)
         self._initial_state = new_initial_state
-
-    def set_alphabet(self, alphabet: str):
-        self._alphabet = alphabet
 
     def add_final_state(self, state_name: str):
         new_final_state = self._get_one_state(state_name)
@@ -85,36 +107,23 @@ class Automaton:
         new_node = State(name)
         self._state_list.append(new_node)
 
-    def _event_exists(self, event: Event):
-        for self_event in self._event_list:
-            self_init_state_name = self_event.get_init_state().get_name()
-            self_final_state_name = self_event.get_final_state().get_name()
-
-            init_state_name = event.get_init_state().get_name()
-            final_state_name = event.get_final_state().get_name()
-
-            if (self_init_state_name == init_state_name and
-                    self_final_state_name == final_state_name):
-                return True
-
-        return False
-
-    def add_event(self, init_node_name_name: str, final_node_name: str, event: list):
-        init_node_name = self._get_one_state(init_node_name_name)
+    def add_event(self, init_node_name: str, final_node_name: str, event: list):
+        init_node = self._get_one_state(init_node_name)
         final_node = self._get_one_state(final_node_name)
 
-        if not (init_node_name) or not (final_node):
-            raise Exception('alguno de los estados no existe.')
+        if not (init_node) or not (final_node):
+            raise Exception(
+                'intenta agregar una trancición a un estado que no existe.')
 
-        new_event = Event(init_node_name, final_node, event)
+        new_event = Event(init_node, final_node, event)
 
         if (self._event_exists(new_event)):
-            raise Exception('el evento ya existe.')
+            raise Exception('está repitiendo un orígen nombre y destino')
 
         self._event_list.append(new_event)
 
     def is_incomplete(self):
-        """ if is incomplete return 
+        """ if is incomplete return
         {
             "state_name" : [missing_transitions...]
             ...
@@ -152,11 +161,11 @@ class Automaton:
         return False
 
     def complete_automaton_sump(self, missing_transitions: dict):
-        self.add_state('sum')
+        self.add_state('sump')
         for init_state_name in missing_transitions:
-            self.add_event(init_state_name, 'sum',
+            self.add_event(init_state_name, 'sump',
                            missing_transitions[init_state_name])
-        self.add_event('sum', 'sum', self._alphabet)
+        self.add_event('sump', 'sump', self._alphabet)
 
     def print_event(self):
         for event in self._event_list:
