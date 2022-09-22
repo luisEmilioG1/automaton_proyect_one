@@ -1,4 +1,4 @@
-from model import Automaton
+from model.Automaton import Automaton
 
 
 class Operations:

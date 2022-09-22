@@ -22,7 +22,7 @@ class Automaton:
 
         alphabet = automaton['alphabet']
         states = automaton['states']
-        initial_state = automaton['initial_state']
+        INITIAL_STATE = automaton['initial_state']
         acceptance_states = automaton['acceptance_states']
         transitions = automaton['transitions']
 
@@ -30,16 +30,16 @@ class Automaton:
             self.add_state(state_name)
 
         for transition in transitions:
-            initial_state = transition['source']
+            origin_state = transition['source']
             destination_state = transition['destiny']
             event = transition['event']
 
-            self.add_event(initial_state, destination_state, event)
+            self.add_event(origin_state, destination_state, event)
 
         for state_name in acceptance_states:
             self.add_final_state(state_name)
 
-        self.set_initial_state(initial_state)
+        self.set_initial_state(INITIAL_STATE)
 
         self.set_alphabet(alphabet)
 
@@ -53,6 +53,16 @@ class Automaton:
         self.complete_automaton_sump(is_incomplete)
         print('\nahora, completo es...\n')
         self.print_event()
+
+
+    def get_state_list(self):
+        return self._state_list
+
+    def get_acceptance_states(self) :
+        return self._acceptance_states
+
+    def set_acceptance_states(self, acceptance_states):
+        self._acceptance_states = acceptance_states
 
     def _get_one_state(self, state_name):
         for node in self._state_list:
@@ -80,8 +90,17 @@ class Automaton:
 
         return False
 
+    def get_alphabet(self):
+        return self._alphabet
+
     def set_alphabet(self, alphabet):
         self._alphabet = alphabet
+
+    def get_initial_state(self):
+        return self._initial_state
+
+    def get_event_list(self):
+        return self._event_list
 
     def set_initial_state(self, state_name: str):
         new_initial_state = self._get_one_state(state_name)
@@ -158,6 +177,7 @@ class Automaton:
         if (bool(missing_transitions)):
             return missing_transitions
 
+
         return False
 
     def complete_automaton_sump(self, missing_transitions: dict):
@@ -175,3 +195,25 @@ class Automaton:
 
             print(init_node_name.get_name() + ' -- ' +
                   str(event_names)+' --> '+final_node.get_name())
+
+    def automaton_complement(self):
+
+        self.print_event()
+
+        #print('Estado inicial', automaton_two._initial_state.get_name())
+
+        normal_states = []
+
+        for state in self.get_state_list():
+            if state not in self.get_acceptance_states():
+                normal_states.append(state.get_name())
+        #print(normal_states)
+
+        aux_acceptance_states = self.get_acceptance_states()
+        r = []
+        for state in self.get_acceptance_states():
+            r.append(state.get_name())
+        print('Viejos estados de aceptacion', r)
+
+        self.set_acceptance_states(normal_states)
+        print('Nuevos estados de aceptacion', self.get_acceptance_states())
