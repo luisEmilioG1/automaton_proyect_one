@@ -1,3 +1,5 @@
+from gettext import translation
+from os import access
 from .State import State
 from .Event import Event
 
@@ -222,8 +224,39 @@ class Automaton:
             print(init_node_name.get_name() + ' -- ' +
                   str(event_names)+' --> '+final_node.get_name())
 
+    def get_quintuple(self):
+        states = []
+        for state in self._state_list:
+            states.append(state.get_name())
+
+        alphabet = self._alphabet
+
+        initial_state = self._initial_state.get_name()
+
+        acceptance_states = []
+
+        for acceptance in self._acceptance_states:
+            acceptance_states.append(acceptance.get_name())
+
+        transitions = []
+
+        for transition in self._event_list:
+            transitions.append({
+                "source": transition.get_init_state().get_name(),
+                "event": transition.get_names(),
+                "destiny": transition.get_final_state().get_name()
+            })
+
+        return {
+            "states": states,
+            "alphabet": alphabet,
+            "initial_state": initial_state,
+            "acceptance_states": acceptance_states,
+            "transitions": transitions
+        }
+
     def automaton_complement(self):
-        #print('Estado inicial', automaton_two._initial_state.get_name())
+        # print('Estado inicial', automaton_two._initial_state.get_name())
 
         normal_states = []
 

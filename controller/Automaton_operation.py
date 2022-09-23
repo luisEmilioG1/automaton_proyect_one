@@ -60,7 +60,8 @@ class Operations:
 
         automaton_unio = Automaton()
         automaton_unio.load_automaton_dict(quintuple_automaton_unio)
-        automaton_unio.print_event()
+        # automaton_unio.print_event()
+        return automaton_unio
 
         #print("los nuevos estados son: ", new_states)
         #print("los nuevos estados de aceptación: ", new_acceptance_states)
