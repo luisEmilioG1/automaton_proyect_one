@@ -1,5 +1,3 @@
-from ast import Return
-from pickle import FALSE
 from .State import State
 from .Event import Event
 
@@ -14,15 +12,11 @@ class Automaton:
         self._initial_state = None
         self._acceptance_states = []
 
-    def load_automaton(self, url: str):
-
-        automaton = {}
-        with open(url) as content:
-            automaton = json.load(content)
+    def load_automaton_dict(self, automaton: dict):
 
         alphabet = automaton['alphabet']
         states = automaton['states']
-        INITIAL_STATE = automaton['initial_state']
+        initial_state = automaton['initial_state']
         acceptance_states = automaton['acceptance_states']
         transitions = automaton['transitions']
 
@@ -39,7 +33,7 @@ class Automaton:
         for state_name in acceptance_states:
             self.add_final_state(state_name)
 
-        self.set_initial_state(INITIAL_STATE)
+        self.set_initial_state(initial_state)
 
         self.set_alphabet(alphabet)
 
@@ -48,17 +42,56 @@ class Automaton:
         if not (is_incomplete):
             return
 
-        print('incompleto era...\n')
-        self.print_event()
+        # print('incompleto era...\n')
+        # self.print_event()
         self.complete_automaton_sump(is_incomplete)
-        print('\nahora, completo es...\n')
-        self.print_event()
+        # print('\nahora, completo es...\n')
+        # self.print_event()
 
+    def load_automaton(self, url: str):
+
+        automaton = {}
+        with open(url) as content:
+            automaton = json.load(content)
+
+        alphabet = automaton['alphabet']
+        states = automaton['states']
+        initial_state = automaton['initial_state']
+        acceptance_states = automaton['acceptance_states']
+        transitions = automaton['transitions']
+
+        for state_name in states:
+            self.add_state(state_name)
+
+        for transition in transitions:
+            origin_state = transition['source']
+            destination_state = transition['destiny']
+            event = transition['event']
+
+            self.add_event(origin_state, destination_state, event)
+
+        for state_name in acceptance_states:
+            self.add_final_state(state_name)
+
+        self.set_initial_state(initial_state)
+
+        self.set_alphabet(alphabet)
+
+        is_incomplete = self.is_incomplete()
+
+        if not (is_incomplete):
+            return
+
+        # print('incompleto era...\n')
+        # self.print_event()
+        self.complete_automaton_sump(is_incomplete)
+        # print('\nahora, completo es...\n')
+        # self.print_event()
 
     def get_state_list(self):
         return self._state_list
 
-    def get_acceptance_states(self) :
+    def get_acceptance_states(self):
         return self._acceptance_states
 
     def set_acceptance_states(self, acceptance_states):
@@ -142,12 +175,6 @@ class Automaton:
         self._event_list.append(new_event)
 
     def is_incomplete(self):
-        """ if is incomplete return
-        {
-            "state_name" : [missing_transitions...]
-            ...
-        }
-        """
         transitions_of_initial_states = {}
 
         for event in self._event_list:
@@ -177,7 +204,6 @@ class Automaton:
         if (bool(missing_transitions)):
             return missing_transitions
 
-
         return False
 
     def complete_automaton_sump(self, missing_transitions: dict):
@@ -197,9 +223,6 @@ class Automaton:
                   str(event_names)+' --> '+final_node.get_name())
 
     def automaton_complement(self):
-
-        self.print_event()
-
         #print('Estado inicial', automaton_two._initial_state.get_name())
 
         normal_states = []
@@ -207,9 +230,6 @@ class Automaton:
         for state in self.get_state_list():
             if state not in self.get_acceptance_states():
                 normal_states.append(state.get_name())
-        #print(normal_states)
-
-        aux_acceptance_states = self.get_acceptance_states()
         r = []
         for state in self.get_acceptance_states():
             r.append(state.get_name())
