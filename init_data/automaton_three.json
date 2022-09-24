@@ -1,0 +1,15 @@
+
+{
+    "states": ["A", "B", "C", "D"],
+    "alphabet": ["0", "1"],
+    "initial_state": "A",
+    "acceptance_states": ["D"],
+    "transitions": [
+        {"source": "A", "event": ["0"], "destiny": "B"},
+        {"source": "A", "event": ["1"], "destiny": "C"},
+        {"source": "B", "event": ["1"], "destiny": "C"},
+        {"source": "C", "event": ["0","1"], "destiny": "C"},
+        {"source": "B", "event": ["0"], "destiny": "D"},
+        {"source": "D", "event": ["0","1"], "destiny": "D"}
+    ]
+}

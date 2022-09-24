@@ -1,5 +1,6 @@
 from ast import Return
 from pickle import FALSE
+from tkinter import E
 from .State import State
 from .Event import Event
 
@@ -54,11 +55,10 @@ class Automaton:
         print('\nahora, completo es...\n')
         self.print_event()
 
-
     def get_state_list(self):
         return self._state_list
 
-    def get_acceptance_states(self) :
+    def get_acceptance_states(self):
         return self._acceptance_states
 
     def set_acceptance_states(self, acceptance_states):
@@ -177,7 +177,6 @@ class Automaton:
         if (bool(missing_transitions)):
             return missing_transitions
 
-
         return False
 
     def complete_automaton_sump(self, missing_transitions: dict):
@@ -200,14 +199,14 @@ class Automaton:
 
         self.print_event()
 
-        #print('Estado inicial', automaton_two._initial_state.get_name())
+        # print('Estado inicial', automaton_two._initial_state.get_name())
 
         normal_states = []
 
         for state in self.get_state_list():
             if state not in self.get_acceptance_states():
                 normal_states.append(state.get_name())
-        #print(normal_states)
+        # print(normal_states)
 
         aux_acceptance_states = self.get_acceptance_states()
         r = []
@@ -217,3 +216,17 @@ class Automaton:
 
         self.set_acceptance_states(normal_states)
         print('Nuevos estados de aceptacion', self.get_acceptance_states())
+
+
+    def switch_to_notation(self):
+        dig = """digraph {
+            """
+        for event in self._event_list:
+            init_state = event.get_init_state().get_name()
+            final_state = event.get_final_state().get_name()
+            event_names = event.get_names()
+            dig += """{0} -> {1}[label="{2}",weight="0.7"]
+            """.format(init_state, final_state, event_names)
+        dig += "}"
+
+        return dig
