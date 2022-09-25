@@ -1,5 +1,3 @@
-
-import json
 from model.Automaton import Automaton
 from controller.Automaton_operation import Operations
 
