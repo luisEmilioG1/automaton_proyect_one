@@ -2,7 +2,7 @@
     "states": ["q0", "q1", "q2"],
     "alphabet": ["x", "y", "z"],
     "initial_state": "q0",
-    "acceptance_states": ["q2", "q1"],
+    "acceptance_states": ["q2"],
     "transitions": [
         {"source": "q0", "event": ["y"], "destiny": "q1"},
         {"source": "q0", "event": ["x"], "destiny": "q2"},
