@@ -16,12 +16,12 @@ a3.load_automaton('init_data/automaton_three.json')
 # print()
 # print('a2 ' + str(a2.is_incomplete()) + ' is complete')
 
-#a2.automaton_complement()
+Operations.automaton_complement(a3)
 
-#print(a3.switch_to_notation())
-#a3.automaton_reverse()
+print(a3.switch_to_notation())
+Operations.automaton_reverse(a3)
 
-#print(a3.switch_to_notation())
+print(a3.switch_to_notation())
 
 """Operations.automaton_reverse(a3)
 

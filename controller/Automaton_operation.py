@@ -86,7 +86,7 @@ class Operations:
     def automaton_reverse(automaton: Automaton):
 
         if len(automaton.get_acceptance_states()) > 1:
-            automaton.create_new_acceptance()
+            Operations.create_new_acceptance(automaton)
 
         automaton.print_event()
 
@@ -154,7 +154,8 @@ class Operations:
         automaton.print_event()
         return automaton
 
-    def create_new_acceptance(automaton):
+    @staticmethod
+    def create_new_acceptance(automaton: Automaton):
         automaton.add_state('lamb')
         for state in automaton.get_acceptance_states():
             automaton.add_event(state.get_name(), 'lamb', ['lambda'])
