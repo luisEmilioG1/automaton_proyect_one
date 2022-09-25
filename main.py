@@ -1,3 +1,5 @@
+
+import json
 from model.Automaton import Automaton
 from controller.Automaton_operation import Operations
 
@@ -21,4 +23,10 @@ a3.load_automaton('init_data/automaton_three.json')
 
 #print(a3.switch_to_notation())
 
-Operations.automaton_reverse(a3)
+"""Operations.automaton_reverse(a3)
+
+a1.load_automaton('init_data/for_unio_one.json')
+a2.load_automaton('init_data/for_unio_two.json')
+# a2.automaton_complement()
+
+Operations.automaton_union(a1, a2)"""
