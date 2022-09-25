@@ -1,0 +1,14 @@
+{
+    "states": ["q0", "q1", "q2"],
+    "alphabet": ["x", "y", "z"],
+    "initial_state": "q0",
+    "acceptance_states": ["q2", "q1"],
+    "transitions": [
+        {"source": "q0", "event": ["y"], "destiny": "q1"},
+        {"source": "q0", "event": ["x"], "destiny": "q2"},
+        {"source": "q0", "event": ["z"], "destiny": "q2"},
+        {"source": "q1", "event": ["z"], "destiny": "q0"},
+        {"source": "q1", "event": ["x"], "destiny": "q2"},
+        {"source": "q2", "event": ["x", "y"], "destiny": "q2"}
+    ]
+}

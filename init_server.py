@@ -26,7 +26,6 @@ def post():
     except Exception as error:
         return {"message": str(error)}, 400
 
-
     return {"message": "carga exitosa", "automaton": a1.get_quintuple()}, 200
 
 
@@ -57,6 +56,35 @@ def union():
     unio_quintuple = union.get_quintuple()
 
     return {"message": "operación exitosa.", "automaton_union": unio_quintuple}, 200
+
+
+@app.route('/intersection', methods=['POST'])
+def intersection():
+    quintuple_one = None
+    quintuple_two = None
+
+    try:
+        quintuple_one = request.files.get('quintuple_one')
+        quintuple_one = json.load(quintuple_one)
+
+        quintuple_two = request.files.get('quintuple_two')
+        quintuple_two = json.load(quintuple_two)
+    except:
+        return {"message": "Archivo(s) no válido(s)"}, 400
+
+    a1 = Automaton()
+    a2 = Automaton()
+
+    try:
+        a1.load_automaton_dict(quintuple_one)
+        a2.load_automaton_dict(quintuple_two)
+    except Exception as error:
+        return {"message": str(error)}, 400
+
+    intersection = Operations.automaton_intersection(a1, a2)
+    intersection_quintuple = intersection.get_quintuple()
+
+    return {"message": "operación exitosa.", "automaton_intersection": intersection_quintuple}, 200
 
 
 @app.route('/complement', methods=['POST'])
@@ -112,7 +140,6 @@ def reverse():
     reverse_quintuple = reverse.get_quintuple()
 
     return {"message": "operación exitosa.", "automaton_reverse": reverse_quintuple}, 200
-
 
 
 @app.route('/address', methods=["POST"])
