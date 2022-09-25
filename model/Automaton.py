@@ -5,7 +5,6 @@ from .Event import Event
 
 import json
 
-
 class Automaton:
     def __init__(self):
         self._event_list = []
@@ -156,7 +155,7 @@ class Automaton:
     def add_state(self, name: str):
         node_exists = self._get_one_state(name)
         if (node_exists):
-            raise Exception('el nodo "'+name+'" ya existe.')
+            raise Exception('el estado "'+name+'" ya existe.')
 
         new_node = State(name)
         self._state_list.append(new_node)

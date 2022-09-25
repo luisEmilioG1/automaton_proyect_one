@@ -35,14 +35,14 @@ class Operations:
                 for name_transition_one in transition_one.get_names():
                     for name_transition_two in transition_two.get_names():
                         if (name_transition_one == name_transition_two):
-                            """ print(name_state_origin_transitio_one+" con " +
-                                  name_transition_one+" va a "+name_state_dstiny_transitio_one)
-                            print("yyyyy")
-                            print(name_state_origin_transitio_two+" con " +
-                                  name_transition_one+" va a "+name_state_destiny_transitio_two)
-                            print("entonces, "+name_state_origin_transitio_one+name_state_origin_transitio_two+" con " +
-                                  name_transition_one + " va a "+name_state_dstiny_transitio_one+name_state_destiny_transitio_two)
-                            print() """
+                            """  print(name_state_origin_transitio_one+" con " +
+                                   name_transition_one+" va a "+name_state_dstiny_transitio_one)
+                             print("yyyyy")
+                             print(name_state_origin_transitio_two+" con " +
+                                   name_transition_one+" va a "+name_state_destiny_transitio_two)
+                             print("entonces, "+name_state_origin_transitio_one+name_state_origin_transitio_two+" con " +
+                                   name_transition_one + " va a "+name_state_dstiny_transitio_one+name_state_destiny_transitio_two)
+                             print() """
 
                             origin = name_state_origin_transitio_one+name_state_origin_transitio_two
                             destiny = name_state_dstiny_transitio_one+name_state_destiny_transitio_two
@@ -67,3 +67,18 @@ class Operations:
         #print("los nuevos estados de aceptación: ", new_acceptance_states)
         #print("el nuevos estado inicial es: ", new_initial_state)
         #print("las nuevas transiciones son: ", new_transitions)
+
+    @staticmethod
+    def automaton_complement(automaton: Automaton):
+        normal_states = []
+
+        for state in automaton.get_state_list():
+            if state not in automaton.get_acceptance_states():
+                normal_states.append(state.get_name())
+        r = []
+        for state in automaton.get_acceptance_states():
+            r.append(state.get_name())
+
+        automaton.set_acceptance_states(normal_states)
+
+        return automaton

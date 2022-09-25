@@ -1,14 +1,37 @@
 from flask import Flask, request
+from flask_cors import CORS
+
 from model.Automaton import Automaton
 from controller.Automaton_operation import Operations
 import json
 
 
 app = Flask(__name__)
+CORS(app)
 
 
-@app.route('/union', methods=['GET'])
-def getUnio():
+@app.route('/load', methods=['POST'])
+def post():
+    quintuple = None
+    try:
+        quintuple = request.files.get('quintuple')
+        quintuple = json.load(quintuple)
+    except:
+        return {"message": "Archivo(s) no válido(s)"}, 400
+
+    a1 = Automaton()
+
+    try:
+        a1.load_automaton_dict(quintuple)
+    except Exception as error:
+        return {"message": str(error)}, 400
+
+
+    return {"message": "carga exitosa", "automaton": a1.get_quintuple()}, 200
+
+
+@app.route('/union', methods=['POST'])
+def union():
     quintuple_one = None
     quintuple_two = None
 
@@ -33,7 +56,12 @@ def getUnio():
     union = Operations.automaton_union(a1, a2)
     unio_quintuple = union.get_quintuple()
 
-    return {"message": "operación exitosa.", "automaton_union": unio_quintuple}, 400
+    return {"message": "operación exitosa.", "automaton_union": unio_quintuple}, 200
+
+
+@app.route('/complement', methods=['GET'])
+def complement():
+    pass
 
 
 @app.route('/address', methods=["POST"])
