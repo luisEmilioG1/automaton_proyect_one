@@ -47,8 +47,24 @@ class Operations:
                             origin = name_state_origin_transitio_one+name_state_origin_transitio_two
                             destiny = name_state_dstiny_transitio_one+name_state_destiny_transitio_two
 
-                            new_transitions.append(
-                                {"source": origin, "event": [name_transition_one], "destiny": destiny})
+                            if not (new_transitions):
+                                new_transitions.append(
+                                    {"source": origin, "event": [name_transition_one], "destiny": destiny})
+                                continue
+
+                            one_repeat = False
+                            for transition in new_transitions:
+                                event_source = transition['source']
+                                event_destiny = transition['destiny']
+
+                                if (event_source == origin and event_destiny == destiny):
+                                    transition['event'].append(
+                                        name_transition_one)
+                                    one_repeat = True
+
+                            if not (one_repeat):
+                                new_transitions.append(
+                                    {"source": origin, "event": [name_transition_one], "destiny": destiny})
 
         quintuple_automaton_unio = {
             "states": new_states,
@@ -63,12 +79,12 @@ class Operations:
         # automaton_unio.print_event()
         return automaton_unio
 
-        #print("los nuevos estados son: ", new_states)
-        #print("los nuevos estados de aceptación: ", new_acceptance_states)
-        #print("el nuevos estado inicial es: ", new_initial_state)
-        #print("las nuevas transiciones son: ", new_transitions)
+        # print("los nuevos estados son: ", new_states)
+        # print("los nuevos estados de aceptación: ", new_acceptance_states)
+        # print("el nuevos estado inicial es: ", new_initial_state)
+        # print("las nuevas transiciones son: ", new_transitions)
 
-    @staticmethod
+    @ staticmethod
     def automaton_intersection(automaton_one: Automaton, automaton_two: Automaton):
         states_automaton_one = automaton_one.get_state_list()
         states_automaton_two = automaton_two.get_state_list()
@@ -112,8 +128,24 @@ class Operations:
                             origin = name_state_origin_transitio_one+name_state_origin_transitio_two
                             destiny = name_state_dstiny_transitio_one+name_state_destiny_transitio_two
 
-                            new_transitions.append(
-                                {"source": origin, "event": [name_transition_one], "destiny": destiny})
+                            if not (new_transitions):
+                                new_transitions.append(
+                                    {"source": origin, "event": [name_transition_one], "destiny": destiny})
+                                continue
+
+                            one_repeat = False
+                            for transition in new_transitions:
+                                event_source = transition['source']
+                                event_destiny = transition['destiny']
+
+                                if (event_source == origin and event_destiny == destiny):
+                                    transition['event'].append(
+                                        name_transition_one)
+                                    one_repeat = True
+
+                            if not (one_repeat):
+                                new_transitions.append(
+                                    {"source": origin, "event": [name_transition_one], "destiny": destiny})
 
         quintuple_automaton_unio = {
             "states": new_states,
@@ -128,12 +160,12 @@ class Operations:
         # automaton_unio.print_event()
         return automaton_unio
 
-        #print("los nuevos estados son: ", new_states)
-        #print("los nuevos estados de aceptación: ", new_acceptance_states)
-        #print("el nuevos estado inicial es: ", new_initial_state)
-        #print("las nuevas transiciones son: ", new_transitions)
+        # print("los nuevos estados son: ", new_states)
+        # print("los nuevos estados de aceptación: ", new_acceptance_states)
+        # print("el nuevos estado inicial es: ", new_initial_state)
+        # print("las nuevas transiciones son: ", new_transitions)
 
-    @staticmethod
+    @ staticmethod
     def automaton_complement(automaton: Automaton):
         normal_states = []
         for state in automaton.get_state_list():
@@ -147,7 +179,7 @@ class Operations:
 
         return automaton
 
-    @staticmethod
+    @ staticmethod
     def automaton_reverse(automaton: Automaton):
 
         if len(automaton.get_acceptance_states()) > 1:
@@ -219,7 +251,7 @@ class Operations:
         automaton.print_event()
         return automaton
 
-    @staticmethod
+    @ staticmethod
     def create_new_acceptance(automaton: Automaton):
         automaton.add_state('lamb')
         for state in automaton.get_acceptance_states():
