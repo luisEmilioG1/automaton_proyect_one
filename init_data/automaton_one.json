@@ -5,6 +5,7 @@
     "acceptance_states": ["Q2", "Q1"],
     "transitions": [
         {"source": "Q1", "event": ["1"], "destiny": "Q2"},
+        {"source": "Q1", "event": ["0"], "destiny": "Q1"},
         {"source": "Q1", "event": ["0"], "destiny": "Q2"},
         {"source": "Q2", "event": ["0", "1"], "destiny": "Q1"}
     ]

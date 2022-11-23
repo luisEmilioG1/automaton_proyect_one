@@ -1,0 +1,11 @@
+{
+    "states": ["A", "B", "C"],
+    "alphabet": ["0", "1"],
+    "initial_state": "A",
+    "acceptance_states": ["C"],
+    "transitions": [
+        {"source": "A", "event": ["0","1"], "destiny": "A"},
+        {"source": "A", "event": ["0"], "destiny": "B"},
+        {"source": "B", "event": ["0"], "destiny": "C"}
+    ]
+}

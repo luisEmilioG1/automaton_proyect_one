@@ -12,7 +12,6 @@ class Automaton:
         self._acceptance_states = []
 
     def load_automaton_dict(self, automaton: dict):
-
         alphabet = automaton['alphabet']
         states = automaton['states']
         initial_state = automaton['initial_state']
@@ -83,7 +82,7 @@ class Automaton:
 
         # print('incompleto era...\n')
         # self.print_event()
-        self.complete_automaton_sump(is_incomplete)
+        # ! NOCOMMENT self.complete_automaton_sump(is_incomplete)
         # print('\nahora, completo es...\n')
         # self.print_event()
 
@@ -137,7 +136,7 @@ class Automaton:
     def set_initial_state(self, state_name: str):
         new_initial_state = self._get_one_state(state_name)
         if not (new_initial_state):
-            raise Exception('el estado "'+state_name+'" no existe.')
+            raise Exception('el estado "' + state_name + '" no existe.')
 
         new_initial_state.set_is_initial(True)
         self._initial_state = new_initial_state
@@ -145,7 +144,7 @@ class Automaton:
     def add_final_state(self, state_name: str):
         new_final_state = self._get_one_state(state_name)
         if not (new_final_state):
-            raise Exception('el estado "'+state_name+'" no existe.')
+            raise Exception('el estado "' + state_name + '" no existe.')
 
         new_final_state.set_is_final(True)
         self._acceptance_states.append(new_final_state)
@@ -153,7 +152,7 @@ class Automaton:
     def add_state(self, name: str):
         node_exists = self._get_one_state(name)
         if (node_exists):
-            raise Exception('el estado "'+name+'" ya existe.')
+            raise Exception('el estado "' + name + '" ya existe.')
 
         new_node = State(name)
         self._state_list.append(new_node)
@@ -209,7 +208,7 @@ class Automaton:
         self.add_state('sump')
         for init_state_name in missing_transitions:
             self.add_event(init_state_name, 'sump',
-                        missing_transitions[init_state_name])
+                           missing_transitions[init_state_name])
         self.add_event('sump', 'sump', self._alphabet)
 
     def print_event(self):
@@ -219,7 +218,7 @@ class Automaton:
             event_names = event.get_names()
 
             print(init_node_name.get_name() + ' -- ' +
-                str(event_names)+' --> '+final_node.get_name())
+                  str(event_names) + ' --> ' + final_node.get_name())
 
     def get_quintuple(self):
         states = []

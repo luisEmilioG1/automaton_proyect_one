@@ -1,0 +1,18 @@
+{
+    "states": ["q0", "q1", "q2", "q3", "q4"],
+    "alphabet": ["a", "b"],
+    "initial_state": "q0",
+    "acceptance_states": ["q1"],
+    "transitions": [
+        {"source": "q0", "event": ["a"], "destiny": "q1"},
+        {"source": "q0", "event": ["a"], "destiny": "q2"},
+        {"source": "q1", "event": ["a"], "destiny": "q1"},
+        {"source": "q1", "event": ["a"], "destiny": "q2"},
+        {"source": "q2", "event": ["a"], "destiny": "q1"},
+        {"source": "q2", "event": ["b"], "destiny": "q3"},
+        {"source": "q2", "event": ["b"], "destiny": "q4"},
+        {"source": "q3", "event": ["b"], "destiny": "q3"},
+        {"source": "q3", "event": ["a"], "destiny": "q1"},
+        {"source": "q3", "event": ["b"], "destiny": "q4"}
+    ]
+}
