@@ -1,0 +1,20 @@
+{
+  "states": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+  "alphabet": ["a", "b"],
+  "initial_state": "A",
+  "acceptance_states": ["J"],
+  "transitions": [
+      {"source": "A", "event": ["a"], "destiny": "B"},
+      {"source": "B", "event": ["λ"], "destiny": "C"},
+      {"source": "C", "event": ["a"], "destiny": "D"},
+      {"source": "C", "event": ["λ"], "destiny": "D"},
+      {"source": "D", "event": ["λ"], "destiny": "E"},
+      {"source": "E", "event": ["λ"], "destiny": "F"},
+      {"source": "E", "event": ["λ"], "destiny": "H"},
+      {"source": "F", "event": ["a"], "destiny": "G"},
+      {"source": "H", "event": ["b"], "destiny": "I"},
+      {"source": "G", "event": ["λ"], "destiny": "J"},
+      {"source": "I", "event": ["λ"], "destiny": "J"}
+
+  ]
+}

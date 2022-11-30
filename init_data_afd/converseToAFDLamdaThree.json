@@ -1,0 +1,20 @@
+{
+  "states": ["S", "1", "2", "3", "4", "5", "6"],
+  "alphabet": ["a", "b"],
+  "initial_state": "S",
+  "acceptance_states": ["4", "2"],
+  "transitions": [
+      {"source": "S", "event": ["λ"], "destiny": "1"},
+      {"source": "1", "event": ["λ"], "destiny": "2"},
+      {"source": "1", "event": ["a"], "destiny": "6"},
+      {"source": "2", "event": ["a"], "destiny": "3"},
+      {"source": "2", "event": ["b"], "destiny": "2"},
+      {"source": "3", "event": ["λ"], "destiny": "6"},
+      {"source": "3", "event": ["a"], "destiny": "4"},
+      {"source": "6", "event": ["b"], "destiny": "5"},
+      {"source": "6", "event": ["λ"], "destiny": "4"},
+      {"source": "5", "event": ["a"], "destiny": "3"},
+      {"source": "4", "event": ["b"], "destiny": "3"},
+      {"source": "4", "event": ["b"], "destiny": "5"}
+  ]
+}
